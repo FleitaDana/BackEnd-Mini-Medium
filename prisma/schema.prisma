@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:password@localhost/app?connect_timeout=600"
+}
+
+model User {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username  String    @unique
+  name      String?   @db.VarChar(35)
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  isProfilePrivate Boolean @default(false)
+  followers Follow[]  @relation("followers")
+  follows   Follow[]  @relation("follows")
+  posts     Post[]
+}
+
+model Follow {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  followerId String    @db.Uuid
+  followedId String    @db.Uuid
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+  followed   User      @relation("followers", fields: [followedId], references: [id], onDelete: Cascade)
+  follower   User      @relation("follows", fields: [followerId], references: [id], onDelete: Cascade)
+}
+
+model Post {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  authorId  String    @db.Uuid
+  content   String    @db.VarChar(240)
+  images    String[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
