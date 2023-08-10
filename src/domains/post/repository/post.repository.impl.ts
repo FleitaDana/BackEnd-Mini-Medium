@@ -36,8 +36,8 @@ export class PostRepositoryImpl implements PostRepository {
     return posts.map(post => new PostDTO(post))
   } */
 
-  //Metodo modificado para consigna 2
 
+  //Metodo modificado para consigna 2
   async getAllByDatePaginated(options: CursorPagination, followedUserIds: string[]): Promise<PostDTO[]> {
     
     console.log("GetAllByDatePaginated",followedUserIds)
@@ -90,12 +90,25 @@ export class PostRepositoryImpl implements PostRepository {
     return (post != null) ? new PostDTO(post) : null
   }
 
-  async getByAuthorId(authorId: string): Promise<PostDTO[]> {
+  //Metodo para la consigna 4
+  async getByAuthorId(authorId: string, options: CursorPagination ): Promise<PostDTO[]> {
     const posts = await this.db.post.findMany({
       where: {
         authorId
-      }
+      },
+      cursor: options.after ? { id: options.after } : options.before ? { id: options.before } : undefined,
+      skip: options.after || options.before ? 1 : undefined,
+      take: options.limit ? (options.before ? -options.limit : options.limit) : undefined,
+      orderBy: [
+        {
+          createdAt: 'desc',
+        },
+        {
+          id: 'asc',
+        },
+      ],
     })
+
     return posts.map(post => new PostDTO(post))
   }
 }

@@ -11,8 +11,8 @@ const FollowService = new FollowServiceImpl(new FollowRepositoryImpl(db))
 
 // POST/api/follower/follow/:user_id  
 followRouter.post('/follow/:user_id', async (req: Request, res: Response) => {
-    const  followerId  = req.params.user_id
-    const { userId: followedId } = res.locals.context 
+    const followedId  = req.params.user_id
+    const { userId: followerId } = res.locals.context 
 
     const FollowDTO = await FollowService.createFollow(followerId, followedId)
     return res.json({ message: 'Usuario seguido', FollowDTO });

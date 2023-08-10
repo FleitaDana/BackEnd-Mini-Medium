@@ -26,9 +26,12 @@ app.use(
   })
 )
 
+
 app.use('/api', router)
 
 app.use(ErrorHandling)
+
+
 
 app.listen(Constants.PORT, () => {
   Logger.info(`Server listening on port ${Constants.PORT}`)

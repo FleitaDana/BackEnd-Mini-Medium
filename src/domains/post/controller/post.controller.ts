@@ -8,6 +8,7 @@ import { PostRepositoryImpl } from '../repository'
 import { PostService, PostServiceImpl } from '../service'
 import { CreatePostInputDTO } from '../dto'
 import { FollowRepositoryImpl } from '@domains/follow/repository'
+import { UserRepositoryImpl } from '@domains/user/repository'
 
 export const postRouter = Router()
 
@@ -15,7 +16,8 @@ export const postRouter = Router()
 // Creamos las instancias de los repositorios y el servicio utilizando la inyección de dependencias
 const postRepository = new PostRepositoryImpl(db);
 const followRepository = new FollowRepositoryImpl(db);
-const service: PostService = new PostServiceImpl(postRepository, followRepository);
+const userRepository = new UserRepositoryImpl(db);
+const service: PostService = new PostServiceImpl(postRepository, followRepository, userRepository);
 
 postRouter.get('/', async (req: Request, res: Response) => {
   const { userId } = res.locals.context
@@ -26,6 +28,7 @@ postRouter.get('/', async (req: Request, res: Response) => {
   return res.status(HttpStatus.OK).json(posts)
 })
 
+//Consigna 4
 postRouter.get('/:postId', async (req: Request, res: Response) => {
   const { userId } = res.locals.context
   const { postId } = req.params
@@ -35,11 +38,13 @@ postRouter.get('/:postId', async (req: Request, res: Response) => {
   return res.status(HttpStatus.OK).json(post)
 })
 
+//Consigna 4
 postRouter.get('/by_user/:userId', async (req: Request, res: Response) => {
   const { userId } = res.locals.context
   const { userId: authorId } = req.params
+  const { limit, before, after } = req.query as Record<string, string>
 
-  const posts = await service.getPostsByAuthor(userId, authorId)
+  const posts = await service.getPostsByAuthor(userId, authorId, { limit: Number(limit), before, after })
 
   return res.status(HttpStatus.OK).json(posts)
 })

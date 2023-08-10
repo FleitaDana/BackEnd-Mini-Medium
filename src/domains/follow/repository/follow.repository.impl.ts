@@ -15,13 +15,13 @@ export class FollowRepositoryImpl implements FollowRepository {
         if (!follower || !followed) {
             throw new Error('Follower or Followed user not found');
         } */
-    
-     /*    return await this.db.follow.create({
-            data: {
-                followerId,
-                followedId,
-            },
-        }) */
+
+        /*    return await this.db.follow.create({
+               data: {
+                   followerId,
+                   followedId,
+               },
+           }) */
 
         const follow = await this.db.follow.create({
             data: {
@@ -29,7 +29,7 @@ export class FollowRepositoryImpl implements FollowRepository {
                 followedId: followedId,
             },
         });
-    
+
         return new FollowDTO(follow);
     }
 
@@ -51,6 +51,7 @@ export class FollowRepositoryImpl implements FollowRepository {
         }
     }
 
+
     //Metodo para la consigna 3
 
     async getFollowedUsers(userId: string): Promise<string[]> {
@@ -68,8 +69,23 @@ export class FollowRepositoryImpl implements FollowRepository {
         const followedUserIds = followedUsers.map((follow) => follow.followedId);
 
         console.log(followedUserIds)
-        
+
         return followedUserIds;
+    }
+
+    //Metodo para la consigna 4
+    async following(userId: string, authorId: string): Promise<boolean> {
+
+        // Buscamos si existe una entrada en la tabla 'follow' donde el followerId coincide con userId y followedId coincide con authorId.
+        const following = await this.db.follow.findFirst({
+            where: {
+                followerId: userId,
+                followedId: authorId,
+            },
+        });
+
+        // Si encontramos una entrada True, significa que el usuario sigue al autor.
+        return Boolean(following);
     }
 }
 
