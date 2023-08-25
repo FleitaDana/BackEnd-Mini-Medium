@@ -18,7 +18,7 @@ export class PostRepositoryImpl implements PostRepository {
     return new PostDTO(post)
   }
 
-  //Consigna 7
+  //Metodo para Consigna 7
   async createComment(userId: string, data: CreatePostInputDTO, idPostComment: string): Promise<PostDTO> {
     const comment = await this.db.post.create({
       data: {
@@ -127,7 +127,7 @@ export class PostRepositoryImpl implements PostRepository {
 
  
 
-//Consigna 8
+//Metodo para Consigna 8
   async findComments(userId: string): Promise<PostDTO[]> {
     const comments = await this.db.post.findMany({
         where: {

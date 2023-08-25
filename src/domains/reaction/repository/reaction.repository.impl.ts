@@ -55,7 +55,7 @@ export class ReactionRepositoryImpl implements ReactionRepository {
         const reactions = await this.db.reaction.findMany({
             where: {
                 userId: userId,
-                type: ReactionType.LIKE, // Asegúrate de usar el valor correcto de tu enumeración ReactionType
+                type: ReactionType.LIKE,
             },
         }) as ReactionDTO[];
     

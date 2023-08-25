@@ -10,7 +10,7 @@ export interface ReactionRepository {
     delete: (reactionId: string) => Promise<void>;
     
 
-    //Consigna 8
+    //Metodo para Consigna 8
     findAllRetweets: (userId: string) => Promise<ReactionDTO[]>; 
     findAllLikes: (userId: string) => Promise<ReactionDTO[]>; 
 
