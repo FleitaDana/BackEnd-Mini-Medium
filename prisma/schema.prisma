@@ -1,10 +1,15 @@
+enum ReactionType {
+  LIKE
+  RETWEET
+}
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:password@localhost/app?connect_timeout=600"
+  url      = "postgresql://postgres:password@db/app?connect_timeout=600"
 }
 
 model User {
@@ -20,6 +25,7 @@ model User {
   followers Follow[]  @relation("followers")
   follows   Follow[]  @relation("follows")
   posts     Post[]
+  reactions Reaction[] @relation("reactionsUser")
 }
 
 model Follow {
@@ -41,6 +47,20 @@ model Post {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+  comment Boolean @default(false)
+  idPostComment String?   @db.Uuid @default(dbgenerated("null"))
   author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  reactions Reaction[] @relation("reactionsPost")
 }
+
+model Reaction {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String   @db.Uuid
+  postId     String   @db.Uuid
+  type       ReactionType    
+  user       User     @relation("reactionsUser", fields: [userId], references: [id], onDelete: Cascade)
+  post       Post     @relation("reactionsPost", fields: [postId], references: [id], onDelete: Cascade)
+}
+
+
 

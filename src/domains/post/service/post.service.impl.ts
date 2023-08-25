@@ -8,16 +8,22 @@ import { FollowRepository } from '@domains/follow/repository'
 import { UserRepository } from '@domains/user/repository'
 
 export class PostServiceImpl implements PostService {
-  constructor (private readonly repository: PostRepository,
-               private readonly followRepository: FollowRepository,
-               private readonly userRepository: UserRepository ) {}
+  constructor(private readonly repository: PostRepository,
+    private readonly followRepository: FollowRepository,
+    private readonly userRepository: UserRepository) { }
 
-  async createPost (userId: string, data: CreatePostInputDTO): Promise<PostDTO> {
+  async createPost(userId: string, data: CreatePostInputDTO): Promise<PostDTO> {
     await validate(data)
     return await this.repository.create(userId, data)
   }
 
-  async deletePost (userId: string, postId: string): Promise<void> {
+  //Consiga 7
+  async createComment(userId: string, data: CreatePostInputDTO, idPostComment: string): Promise<PostDTO> {
+    await validate(data)
+    return await this.repository.createComment(userId, data, idPostComment)
+  }
+
+  async deletePost(userId: string, postId: string): Promise<void> {
     const post = await this.repository.getById(postId)
     if (!post) throw new NotFoundException('post')
     if (post.authorId !== userId) throw new ForbiddenException()
@@ -26,7 +32,7 @@ export class PostServiceImpl implements PostService {
 
 
   //Metodo consigna 4
-  async getPost (userId: string, postId: string): Promise<PostDTO> {
+  async getPost(userId: string, postId: string): Promise<PostDTO> {
     // TODO: validate that the author has public profile or the user follows the author
 
     const post = await this.repository.getById(postId)
@@ -34,18 +40,18 @@ export class PostServiceImpl implements PostService {
 
     const author = await this.userRepository.getById(post.authorId)
 
-    if (author?.isProfilePrivate == false){
+    if (author?.isProfilePrivate == false) {
       return post
-    } 
+    }
 
     const follow = await this.followRepository.following(userId, post.authorId)
 
-    if ((author?.isProfilePrivate == true) && (follow == true)){
+    if ((author?.isProfilePrivate == true) && (follow == true)) {
       return post
-    } else{
+    } else {
       throw new NotFollow
     }
-   
+
   }
 
   /* async getLatestPosts (userId: string, options: CursorPagination): Promise<PostDTO[]> {
@@ -68,28 +74,41 @@ export class PostServiceImpl implements PostService {
 
     return posts.map((post) => new PostDTO(post));
   }
-  
+
   //Metodo para la consigna 4
-  async getPostsByAuthor (userId: any, authorId: string, options: CursorPagination): Promise<PostDTO[]> {
+  async getPostsByAuthor(userId: any, authorId: string, options: CursorPagination): Promise<PostDTO[]> {
     // TODO: throw exception when the author has a private profile and the user doesn't follow them
 
     const post = await this.repository.getByAuthorId(authorId, options)
-    
+
     if (!post) throw new NotFoundException('post')
 
     const author = await this.userRepository.getById(authorId)
 
-    if (author?.isProfilePrivate == false){
+    if (author?.isProfilePrivate == false) {
       return post
-    } 
+    }
 
     const follow = await this.followRepository.following(userId, authorId)
 
-    if ((author?.isProfilePrivate == true) && (follow == true)){
+    if ((author?.isProfilePrivate == true) && (follow == true)) {
       return post
-    } else{
+    } else {
       throw new NotFollow
     }
+
+  }
+
+  //Consigna 8
+  async getComments(userId: string): Promise<PostDTO[]> {
+
+    const comments = await this.repository.findComments(userId);
+
+    if (comments.length === 0) {
+      throw new Error('El usuario aun no realizo comentarios');
+    }
+
+    return comments.map((comment) => new PostDTO(comment));
 
   }
 }

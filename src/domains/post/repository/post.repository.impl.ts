@@ -1,7 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-
 import { CursorPagination } from '@types'
-
 import { PostRepository } from '.'
 import { CreatePostInputDTO, PostDTO } from '../dto'
 import { FollowRepository } from '@domains/follow/repository'
@@ -13,10 +11,24 @@ export class PostRepositoryImpl implements PostRepository {
     const post = await this.db.post.create({
       data: {
         authorId: userId,
+        idPostComment: null,
         ...data
       }
     })
     return new PostDTO(post)
+  }
+
+  //Consigna 7
+  async createComment(userId: string, data: CreatePostInputDTO, idPostComment: string): Promise<PostDTO> {
+    const comment = await this.db.post.create({
+      data: {
+        authorId: userId,
+        idPostComment: idPostComment,
+        comment: true,
+        ...data
+      }
+    })
+    return new PostDTO(comment)
   }
 
   /* async getAllByDatePaginated (options: CursorPagination): Promise<PostDTO[]> {
@@ -39,9 +51,9 @@ export class PostRepositoryImpl implements PostRepository {
 
   //Metodo modificado para consigna 2
   async getAllByDatePaginated(options: CursorPagination, followedUserIds: string[]): Promise<PostDTO[]> {
-    
-    console.log("GetAllByDatePaginated",followedUserIds)
-    
+
+    console.log("GetAllByDatePaginated", followedUserIds)
+
     const posts = await this.db.post.findMany({
       where: {
         // Filtramos por autores de cuentas públicas (isProfilePrivate: false) o autores seguidos por el usuario actual
@@ -91,7 +103,7 @@ export class PostRepositoryImpl implements PostRepository {
   }
 
   //Metodo para la consigna 4
-  async getByAuthorId(authorId: string, options: CursorPagination ): Promise<PostDTO[]> {
+  async getByAuthorId(authorId: string, options: CursorPagination): Promise<PostDTO[]> {
     const posts = await this.db.post.findMany({
       where: {
         authorId
@@ -111,4 +123,18 @@ export class PostRepositoryImpl implements PostRepository {
 
     return posts.map(post => new PostDTO(post))
   }
+
+
+ 
+
+//Consigna 8
+  async findComments(userId: string): Promise<PostDTO[]> {
+    const comments = await this.db.post.findMany({
+        where: {
+            authorId: userId,
+        },
+    });
+
+    return comments.map((comment) => new PostDTO(comment));
+}
 }

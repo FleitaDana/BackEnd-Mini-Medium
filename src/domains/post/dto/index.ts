@@ -9,6 +9,7 @@ export class CreatePostInputDTO {
   @IsOptional()
   @MaxLength(4)
     images?: string[]
+
 }
 
 export class PostDTO {
@@ -18,6 +19,8 @@ export class PostDTO {
     this.content = post.content
     this.images = post.images
     this.createdAt = post.createdAt 
+    this.comment = post.comment
+    this.idPostComment = post.idPostComment
   }
 
   id: string
@@ -25,4 +28,6 @@ export class PostDTO {
   content: string
   images: string[]
   createdAt: Date
+  comment: boolean
+  idPostComment?: string | null
 }

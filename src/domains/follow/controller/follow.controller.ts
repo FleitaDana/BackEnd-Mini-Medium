@@ -9,7 +9,57 @@ export const followRouter = Router()
 // Use dependency injection
 const FollowService = new FollowServiceImpl(new FollowRepositoryImpl(db))
 
-// POST/api/follower/follow/:user_id  
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Follow: 
+ *          type: object 
+ *          required: 
+ *              - followerId
+ *              - followedId
+ *          properties:
+ *            id: 
+ *                type: string
+ *                description: id autogenerado para follow
+ *            followerId:
+ *                type: string
+ *                description: Id del seguidor
+ *            followedId:
+ *                type: string
+ *                description: Id del usuario seguido
+ *            createdAt:
+ *                type: string
+ *                format: date
+ *                description: Fecha de creacion de follow
+ *            updatedAt:
+ *                type: string
+ *                format: date
+ *                description: Fecha de actualizacion de follow
+ *            deletedAt:
+ *                type: string
+ *                format: date
+ *                description: Fecha de eliminacion de follow
+ */
+/**
+
+/**
+ * @swagger
+ * /api/follower/follow/{user_id}:
+ *   post:
+ *     summary: Seguir a un usuario
+ *     tags: [Follower]
+ *     parameters:
+ *       - name: user_id
+ *         in: path
+ *         required: true
+ *         description: ID del usuario que se desea seguir
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Usuario seguido
+ */
 followRouter.post('/follow/:user_id', async (req: Request, res: Response) => {
     const followedId  = req.params.user_id
     const { userId: followerId } = res.locals.context 
@@ -18,7 +68,23 @@ followRouter.post('/follow/:user_id', async (req: Request, res: Response) => {
     return res.json({ message: 'Usuario seguido', FollowDTO });
 })
 
-// POST /api/follower/unfollow/:user_id
+/**
+ * @swagger
+ * /api/follower/unfollow/{user_id}:
+ *   post:
+ *     summary: Dejar de seguir a un usuario
+ *     tags: [Follower]
+ *     parameters:
+ *       - name: user_id
+ *         in: path
+ *         required: true
+ *         description: ID del usuario que se desea dejar de seguir
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Dejo de seguir al usuario
+ */
 followRouter.post('/unfollow/:user_id', async (req: Request, res: Response) => {
     const followerId = req.params.user_id
     const { userId: followedId } = res.locals.context
@@ -26,6 +92,3 @@ followRouter.post('/unfollow/:user_id', async (req: Request, res: Response) => {
     await FollowService.deleteFollow(followerId, followedId)
     return res.json({ message: 'Dejo de seguir al usuario' });
 })
-
-
-
