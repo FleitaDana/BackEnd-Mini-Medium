@@ -7,6 +7,7 @@ export class FollowRepositoryImpl implements FollowRepository {
 
     constructor(private readonly db: PrismaClient) { }
 
+    //Metodo para consigna 1
     async createFollow(followerId: string, followedId: string): Promise<FollowDTO> {
 
         /* const follower = await this.db.user.findUnique({ where: { id: followerId } });
@@ -33,6 +34,7 @@ export class FollowRepositoryImpl implements FollowRepository {
         return new FollowDTO(follow);
     }
 
+    //Metodo para consigna 1
     async unfollowUser(followerId: string, followedId: string): Promise<void> {
 
         const follow = await this.db.follow.findFirst({

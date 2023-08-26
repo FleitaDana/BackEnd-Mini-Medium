@@ -6,6 +6,7 @@ export class FollowServiceImpl implements FollowService {
 
     constructor(private readonly repository: FollowRepository) { }
 
+    //Metodos para consigna 1
     async createFollow(followerId: string, followedId: string): Promise<FollowDTO> {
         return await this.repository.createFollow(followerId, followedId)
     }

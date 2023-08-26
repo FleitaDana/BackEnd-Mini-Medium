@@ -105,13 +105,13 @@ userRouter.get('/me', async (req: Request, res: Response) => {
  * @swagger
  * /api/users/{userId}:
  *   get:
- *     summary: Obtener información de un usuario por su ID
+ *     summary: Obtener información de un usuario por su Id
  *     tags: [User]
  *     parameters:
  *       - name: userId
  *         in: path
  *         required: true
- *         description: ID del usuario que se recupera del endpoint
+ *         description: Id del usuario que se recupera del endpoint
  *         schema:
  *           type: string
  *     responses:

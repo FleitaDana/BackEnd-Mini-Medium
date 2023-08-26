@@ -7,6 +7,7 @@ export class ReactionRepositoryImpl implements ReactionRepository {
 
     constructor(private readonly db: PrismaClient) { }
 
+    //Metodo para consigna 6
     async createReaction(userId: string, postId: string, data: ReactionBody): Promise<ReactionDTO> {
 
         const reaction = await this.db.reaction.create({
@@ -21,6 +22,7 @@ export class ReactionRepositoryImpl implements ReactionRepository {
 
     }
 
+    //Metodo para consigna 6
     async findReaction(userId: string, postId: string, data: ReactionBody): Promise<ReactionDTO | null> {
         const reaction = await this.db.reaction.findFirst({
             where: {
@@ -32,6 +34,7 @@ export class ReactionRepositoryImpl implements ReactionRepository {
         return reaction ;
     }
 
+    //Metodo para consigna 6
     async delete(reactionId: string): Promise<void> {
         await this.db.reaction.delete({
           where: {
@@ -40,6 +43,7 @@ export class ReactionRepositoryImpl implements ReactionRepository {
         })
       }
 
+      //Metodo para consigna 8
       async findAllRetweets(userId: string): Promise<ReactionDTO[]> {
         const reactions = await this.db.reaction.findMany({
             where: {
@@ -51,6 +55,7 @@ export class ReactionRepositoryImpl implements ReactionRepository {
         return reactions.map((reaction) => new ReactionDTO(reaction)); 
     }
 
+    //Metodo para consigna 8
     async findAllLikes(userId: string): Promise<ReactionDTO[]> {
         const reactions = await this.db.reaction.findMany({
             where: {

@@ -16,6 +16,7 @@ export class ReactionServiceImpl implements ReactionService {
         private readonly userRepository: UserRepository) { }
 
 
+    //Metodo para consigna 6
     async createReaction(userId: string, postId: string, data: ReactionBody): Promise<ReactionDTO> {
 
         const post = await this.postRepository.getById(postId);
@@ -36,7 +37,7 @@ export class ReactionServiceImpl implements ReactionService {
 
     }
 
-
+    //Metodo para consigna 6
     async deleteReaction(userId: string, postId: string, data: ReactionBody): Promise<void> {
 
         const post = await this.postRepository.getById(postId);
@@ -49,7 +50,7 @@ export class ReactionServiceImpl implements ReactionService {
 
     }
 
-    //Consigna 8
+    //Metodo para consigna 8
     async getRetweets(userId: string): Promise<ReactionDTO[]> {
 
         const reactions = await this.repository.findAllRetweets(userId);
@@ -62,7 +63,7 @@ export class ReactionServiceImpl implements ReactionService {
 
     }
 
-    //Consigna 8
+    //Metodo para consigna 8
     async getLikes(userId: string): Promise<ReactionDTO[]> {
 
         const reactions = await this.repository.findAllLikes(userId);

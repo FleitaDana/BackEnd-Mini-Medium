@@ -82,7 +82,7 @@ const reactionService = new ReactionServiceImpl(reactionRepository, postReposito
  *       500:
  *         description: Error interno del servidor
  */
-// POST api/reaction/:post_id
+//Consigna 6
 reactionRouter.post('/:post_id', async (req: Request, res: Response) => {
     const postId  = req.params.post_id
     const { userId } = res.locals.context 
@@ -124,7 +124,7 @@ reactionRouter.post('/:post_id', async (req: Request, res: Response) => {
  *       500:
  *         description: Error interno del servidor
  */
-// DELETE api/reaction/:post_id
+//Consigna 6
 reactionRouter.delete('/:post_id', async (req: Request, res: Response) => {
     const postId  = req.params.post_id
     const { userId } = res.locals.context 
@@ -144,6 +144,7 @@ reactionRouter.delete('/:post_id', async (req: Request, res: Response) => {
  *       200:
  *         description: Lista de reacciones de tipo RETWEET
  */
+//Consigna 8
 reactionRouter.get('/retweets', async (req: Request, res: Response) => {
     const { userId } = res.locals.context 
 
@@ -161,6 +162,7 @@ reactionRouter.get('/retweets', async (req: Request, res: Response) => {
  *       200:
  *         description: Lista de reacciones de tipo LIKE
  */
+//Consigna 8
 reactionRouter.get('/likes', async (req: Request, res: Response) => {
     const { userId } = res.locals.context 
 

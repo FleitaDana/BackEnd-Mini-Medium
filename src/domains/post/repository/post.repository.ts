@@ -8,9 +8,9 @@ export interface PostRepository {
   getById: (postId: string) => Promise<PostDTO | null>
   getByAuthorId: ( authorId: string, options: CursorPagination) => Promise<PostDTO[]>
 
-  //Metodo para Consigna 7
+  //Metodo para consigna 7
   createComment : (userId: string, data: CreatePostInputDTO, idPostComment: string) => Promise<PostDTO>
 
-  //Metodo para Consigna 8
+  //Metodo para consigna 8
   findComments: (userId: string) => Promise<PostDTO[]>
 }

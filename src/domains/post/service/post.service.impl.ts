@@ -17,7 +17,7 @@ export class PostServiceImpl implements PostService {
     return await this.repository.create(userId, data)
   }
 
-  //Metodo consiga 7
+  //Metodo para consiga 7
   async createComment(userId: string, data: CreatePostInputDTO, idPostComment: string): Promise<PostDTO> {
     await validate(data)
     return await this.repository.createComment(userId, data, idPostComment)
@@ -31,7 +31,7 @@ export class PostServiceImpl implements PostService {
   }
 
 
-  //Metodo consigna 4
+  //Metodo para consigna 4
   async getPost(userId: string, postId: string): Promise<PostDTO> {
     // TODO: validate that the author has public profile or the user follows the author
 
@@ -61,7 +61,7 @@ export class PostServiceImpl implements PostService {
 
 
 
-  //Metodo para la consigna 2
+  //Metodo para consigna 2
   async getLatestPosts(userId: string, options: CursorPagination): Promise<PostDTO[]> {
 
     // Obtenemos la lista de usuarios seguidos por el usuario actual (userId)
@@ -75,7 +75,7 @@ export class PostServiceImpl implements PostService {
     return posts.map((post) => new PostDTO(post));
   }
 
-  //Metodo para la consigna 4
+  //Metodo para consigna 4
   async getPostsByAuthor(userId: any, authorId: string, options: CursorPagination): Promise<PostDTO[]> {
     // TODO: throw exception when the author has a private profile and the user doesn't follow them
 
@@ -99,7 +99,7 @@ export class PostServiceImpl implements PostService {
 
   }
 
-  //Metodo consigna 8
+  //Metodo para consigna 8
   async getComments(userId: string): Promise<PostDTO[]> {
 
     const comments = await this.repository.findComments(userId);

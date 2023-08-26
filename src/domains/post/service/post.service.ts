@@ -7,9 +7,9 @@ export interface PostService {
   getLatestPosts: (userId: string, options: { limit?: number, before?: string, after?: string }) => Promise<PostDTO[]>
   getPostsByAuthor: (userId: any, authorId: string, options: { limit?: number, before?: string, after?: string }) => Promise<PostDTO[]>
 
-  //Consigna 7
+  //Metodo para consigna 7
   createComment: (userId: string, body: CreatePostInputDTO, idPostComment: string) => Promise<PostDTO>
 
-  //Consigna 8
+  //Metodo para consigna 8
   getComments: (userId : string ) => Promise<PostDTO[]>;
 }
