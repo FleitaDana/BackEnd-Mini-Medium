@@ -13,7 +13,6 @@ export const authRouter = Router()
 // Use dependency injection
 const service: AuthService = new AuthServiceImpl(new UserRepositoryImpl(db))
 
-
 /**
  * @swagger
  * tags:
@@ -34,9 +33,9 @@ const service: AuthService = new AuthServiceImpl(new UserRepositoryImpl(db))
  *            schema:
  *              $ref: '#/components/schemas/User'
  *            example: 
- *              username: geademundo
- *              email: gea@email.com
- *              password: bolitasdepapeL2!
+ *              username: Dana
+ *              email: Dana@gmail.com
+ *              password: dana123
  *      responses:
  *        200:
  *          description: Usuario creado

@@ -102,7 +102,7 @@ export class PostRepositoryImpl implements PostRepository {
     return (post != null) ? new PostDTO(post) : null
   }
 
-  //Metodo para la consigna 4
+  //Metodo para consigna 4
   async getByAuthorId(authorId: string, options: CursorPagination): Promise<PostDTO[]> {
     const posts = await this.db.post.findMany({
       where: {
@@ -123,9 +123,6 @@ export class PostRepositoryImpl implements PostRepository {
 
     return posts.map(post => new PostDTO(post))
   }
-
-
- 
 
 //Metodo para Consigna 8
   async findComments(userId: string): Promise<PostDTO[]> {

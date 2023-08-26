@@ -53,7 +53,6 @@ export class FollowRepositoryImpl implements FollowRepository {
 
 
     //Metodo para la consigna 3
-
     async getFollowedUsers(userId: string): Promise<string[]> {
         // Obtenemos los IDs de los usuarios seguidos por el usuario con el ID proporcionado (userId)
         const followedUsers = await this.db.follow.findMany({

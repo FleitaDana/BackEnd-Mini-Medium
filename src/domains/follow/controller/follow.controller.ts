@@ -21,7 +21,7 @@ const FollowService = new FollowServiceImpl(new FollowRepositoryImpl(db))
  *          properties:
  *            id: 
  *                type: string
- *                description: id autogenerado para follow
+ *                description: Id autogenerado para follow
  *            followerId:
  *                type: string
  *                description: Id del seguidor
@@ -31,7 +31,7 @@ const FollowService = new FollowServiceImpl(new FollowRepositoryImpl(db))
  *            createdAt:
  *                type: string
  *                format: date
- *                description: Fecha de creacion de follow
+ *                description: Fecha de creación de follow
  *            updatedAt:
  *                type: string
  *                format: date
@@ -53,7 +53,7 @@ const FollowService = new FollowServiceImpl(new FollowRepositoryImpl(db))
  *       - name: user_id
  *         in: path
  *         required: true
- *         description: ID del usuario que se desea seguir
+ *         description: Id del usuario que se desea seguir
  *         schema:
  *           type: string
  *     responses:
@@ -78,7 +78,7 @@ followRouter.post('/follow/:user_id', async (req: Request, res: Response) => {
  *       - name: user_id
  *         in: path
  *         required: true
- *         description: ID del usuario que se desea dejar de seguir
+ *         description: Id del usuario que se desea dejar de seguir
  *         schema:
  *           type: string
  *     responses:

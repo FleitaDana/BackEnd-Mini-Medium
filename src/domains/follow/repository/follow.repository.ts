@@ -1,6 +1,8 @@
 import {FollowDTO } from '../dto'
 
 export interface FollowRepository {
+
+    //Metodos para consigna 1
     createFollow(followerId: string, followedId: string): Promise<FollowDTO>;
     unfollowUser(followerId: string, followedId: string): Promise<void>;
 

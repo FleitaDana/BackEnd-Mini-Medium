@@ -17,7 +17,7 @@ export class PostServiceImpl implements PostService {
     return await this.repository.create(userId, data)
   }
 
-  //Consiga 7
+  //Metodo consiga 7
   async createComment(userId: string, data: CreatePostInputDTO, idPostComment: string): Promise<PostDTO> {
     await validate(data)
     return await this.repository.createComment(userId, data, idPostComment)
@@ -99,7 +99,7 @@ export class PostServiceImpl implements PostService {
 
   }
 
-  //Consigna 8
+  //Metodo consigna 8
   async getComments(userId: string): Promise<PostDTO[]> {
 
     const comments = await this.repository.findComments(userId);

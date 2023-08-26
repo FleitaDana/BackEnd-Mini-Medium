@@ -10,13 +10,11 @@ import { UserRepositoryImpl } from '@domains/user/repository'
 
 export const postRouter = Router()
 
-
 // Creamos las instancias de los repositorios y el servicio utilizando la inyección de dependencias
 const postRepository = new PostRepositoryImpl(db);
 const followRepository = new FollowRepositoryImpl(db);
 const userRepository = new UserRepositoryImpl(db);
 const service: PostService = new PostServiceImpl(postRepository, followRepository, userRepository);
-
 
 /**
  * @swagger
@@ -37,10 +35,10 @@ const service: PostService = new PostServiceImpl(postRepository, followRepositor
  *      properties:
  *        id:
  *          type: string
- *          description: ID del post
+ *          description: Id del post
  *        authorId:
  *          type: string
- *          description: ID del autor del post
+ *          description: Id del autor del post
  *        content:
  *          type: string
  *          description: Contenido del post
@@ -60,13 +58,13 @@ const service: PostService = new PostServiceImpl(postRepository, followRepositor
  *        deletedAt:
  *          type: string
  *          format: date-time
- *          description: Fecha de eliminación del post (si aplica)
+ *          description: Fecha de eliminación del post
  *        comment:
  *          type: boolean
  *          description: Indica si el post es un comentario
  *        idPostComment:
  *          type: string
- *          description: ID del post al que hace referencia el comentario (si es un comentario)
+ *          description: Id del post al que hace referencia el comentario (si es un comentario)
  *        author:
  *          type: object
  *          description: Autor del post
@@ -254,7 +252,7 @@ postRouter.post('/:idPostComment', BodyValidation(CreatePostInputDTO), async (re
  *       - name: postId
  *         in: path
  *         required: true
- *         description: ID del post a eliminar
+ *         description: Id del post a eliminar
  *         schema:
  *           type: string
  *     responses:
