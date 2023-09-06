@@ -1,18 +1,15 @@
 import { Router } from 'express'
 import { withAuth } from '@utils'
-import { userRouter } from '@domains/user'
-import { postRouter } from '@domains/post'
+import { postRouter } from '@domains/post/controller'
+import { userRouter} from '@domains/user/controller'
 import { authRouter } from '@domains/auth'
-import { healthRouter } from '@domains/health'
-import { followRouter } from '@domains/follow/controller'
-import { reactionRouter } from '@domains/reaction/controller'
+
 
 export const router = Router()
 
-router.use('/health', healthRouter)
+
 router.use('/auth', authRouter)
-router.use('/user', withAuth, userRouter)
 router.use('/post', withAuth, postRouter)
-router.use('/follower', withAuth, followRouter) //Cod
-router.use('/reaction', withAuth, reactionRouter) //Cod
+router.use('/user', withAuth,  userRouter)
+
 

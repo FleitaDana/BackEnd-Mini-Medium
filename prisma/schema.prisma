@@ -1,7 +1,5 @@
-enum ReactionType {
-  LIKE
-  RETWEET
-}
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -14,53 +12,23 @@ datasource db {
 
 model User {
   id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  username  String    @unique
-  name      String?   @db.VarChar(35)
+  firstName      String   @db.VarChar(35) 
+  lastName      String   @db.VarChar(35)
   email     String    @unique
   password  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-  isProfilePrivate Boolean @default(false)
-  followers Follow[]  @relation("followers")
-  follows   Follow[]  @relation("follows")
   posts     Post[]
-  reactions Reaction[] @relation("reactionsUser")
-}
 
-model Follow {
-  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  followerId String    @db.Uuid
-  followedId String    @db.Uuid
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  deletedAt  DateTime?
-  followed   User      @relation("followers", fields: [followedId], references: [id], onDelete: Cascade)
-  follower   User      @relation("follows", fields: [followerId], references: [id], onDelete: Cascade)
 }
 
 model Post {
   id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   authorId  String    @db.Uuid
+  title   String    @db.VarChar(100)
   content   String    @db.VarChar(240)
-  images    String[]
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-  comment Boolean @default(false)
-  idPostComment String?   @db.Uuid @default(dbgenerated("null"))
   author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  reactions Reaction[] @relation("reactionsPost")
 }
 
-model Reaction {
-  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId     String   @db.Uuid
-  postId     String   @db.Uuid
-  type       ReactionType    
-  user       User     @relation("reactionsUser", fields: [userId], references: [id], onDelete: Cascade)
-  post       Post     @relation("reactionsPost", fields: [postId], references: [id], onDelete: Cascade)
-}
 
 
 

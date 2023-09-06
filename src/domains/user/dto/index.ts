@@ -1,30 +1,28 @@
 export class UserDTO {
-  constructor (user: UserDTO) {
-    this.id = user.id
-    this.name = user.name
-    this.username = user.username
-    this.createdAt = user.createdAt
-    this.isProfilePrivate = user.isProfilePrivate // Agregamos el atributo isProfilePrivate
+    constructor (user: UserDTO) {
+      this.id = user.id
+      this.firstName = user.firstName
+      this.lastName = user.lastName
+      this.email = user.email
+      this.password = user.password 
+    }
+  
+    id: string
+    firstName: string 
+    lastName: string
+    email: string
+    password: string
   }
-
-  id: string
-  name: string | null
-  username: string
-  createdAt: Date
-  isProfilePrivate: boolean
-}
-
-export class ExtendedUserDTO extends UserDTO {
-  email!: string;
-  password!: string;
-  //isProfilePrivate!: boolean; 
-
-  constructor(user: ExtendedUserDTO) {
-    super(user);
-    this.email = user.email;
-    this.password = user.password;
-    //this.isProfilePrivate = user.isProfilePrivate || false; // Asignamos el valor del atributo isProfilePrivate
+  
+  export class ExtendedUserDTO extends UserDTO {
+    email: string;
+    password: string;
+  
+    constructor(user: ExtendedUserDTO) {
+      super(user);
+      this.email = user.email;
+      this.password = user.password;
+      
+    }
   }
-}
-
-
+  

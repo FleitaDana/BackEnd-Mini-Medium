@@ -7,22 +7,27 @@ export class TokenDTO {
 export class SignupInputDTO {
   @IsString()
   @IsNotEmpty()
-  @IsEmail()
-    email: string
+  firstName: string
 
   @IsString()
   @IsNotEmpty()
-    username: string
+  lastName: string
+
+  @IsString()
+  @IsNotEmpty()
+  @IsEmail()
+  email: string
 
   @IsString()
   @IsNotEmpty()
   @IsStrongPassword()
-    password: string
+  password: string
 
-  constructor (email: string, username: string, password: string) {
+  constructor(firstName: string, lastName: string, email: string, password: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.email = email
     this.password = password
-    this.username = username
   }
 }
 
@@ -31,15 +36,16 @@ export class LoginInputDTO {
   @IsString()
   @IsEmail()
   @IsNotEmpty()
-    email?: string
-
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-    username?: string
+  email!: string
 
   @IsString()
   @IsNotEmpty()
   @IsStrongPassword()
-    password!: string
+  password!: string
+
+
+  constructor(email: string, password: string) {
+    this.email = email
+    this.password = password
+  }
 }

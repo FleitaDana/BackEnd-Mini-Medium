@@ -9,11 +9,9 @@ import { ErrorHandling } from '@utils/errors'
 
 const app = express()
 
-
 const bodyParser = require("body-parser"),
   swaggerJsdoc = require("swagger-jsdoc"),
   swaggerUi = require("swagger-ui-express");
-
 
 // Set up request logger
 if (Constants.NODE_ENV === NodeEnv.DEV) {
@@ -32,6 +30,7 @@ app.use(
   })
 )
 
+console.log("MENSAJE",Constants.CORS_WHITELIST)
 
 const options = {
   definition: {
